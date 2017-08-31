@@ -119,6 +119,7 @@ JOB_OUTPUT_RELATIVE_PATH=$STEP/${{JOB_NAME}}_$TIMESTAMP.o
 JOB_OUTPUT=$JOB_OUTPUT_DIR/$JOB_OUTPUT_RELATIVE_PATH
 COMMAND=$(cat << '{limit_string}'
 TMPDIR=${tmpdir_path}
+module load R/3.3.0
 module load mugqic-pipelines/2.2.0
 {job.command_with_modules}
 {limit_string}
@@ -233,3 +234,4 @@ class DaemonScheduler(Scheduler):
                     } for job in step.jobs]
                 } for step in pipeline.step_range]
             }}, indent=4)
+

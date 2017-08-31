@@ -60,7 +60,7 @@ def raw(input_rds_file, output_rds_file):
 R --no-save --no-restore <<-EOF
 suppressPackageStartupMessages(library(minfi))
 rgset <- readRDS("{input_rds_file}")
-grset <- ratioConvert(mapToGenome(preprocessRaw(rgset))
+grset <- ratioConvert(mapToGenome(preprocessRaw(rgset)))
 saveRDS(grset, "{output_rds_file}")
 
 EOF""".format(
@@ -121,10 +121,11 @@ def illumina(input_rds_file, output_rds_file):
 R --no-save --no-restore <<-EOF
 suppressPackageStartupMessages(library(minfi))
 rgset <- readRDS("{input_rds_file}")
-grset <- ratioConvert(mapToGenome(preprocessIllumina(rgset))
+grset <- ratioConvert(mapToGenome(preprocessIllumina(rgset, bg.correct = TRUE)))
 saveRDS(grset, "{output_rds_file}")
 
 EOF""".format(
 		input_rds_file=input_rds_file,
 		output_rds_file=output_rds_file
 	))
+

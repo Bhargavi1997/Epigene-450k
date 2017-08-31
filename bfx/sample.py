@@ -87,20 +87,10 @@ class Illumina450kSample:
 		return self._cell_type
 
 	@property
+	def batch(self):
+		return self._batch
+
+	@property
 	def sex(self):
 		return self._sex
 
-def parse_illumina450k_sample_file(illumina450k_sample_file):
-	samples = []
-
-	log.info("Parsing Illumina 450k sample sheet file " + illumina450k_sample_file + "...")
-	sample_csv = csv.DictReader(open(illumina450k_sample_file, "rb"), delimiter = ',')
-	for line in sample_csv:
-		sample = Illumina450kSample(line["Sample_ID"],
-									os.path.join(os.path.dirname(illumina450k_sample_file), line["Sample_Group"], line["Sentrix_Barcode"] + "_" + line["Sample_Selection"]))
-		sample._cell_type = line.get("Cell_Type", None)
-		sample._sex = line.get("Sex", None)
-		sample._status = line.get("Sample_Group", None)
-		samples.append(sample)
-	
-	return samples 

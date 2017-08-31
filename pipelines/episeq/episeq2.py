@@ -194,7 +194,6 @@ class Episeq(common.Illumina):
 
 		for sample in self.samples:
 			#Either select aligned sample from previous alignment step or aligned BAM/SAM files in readset file
-			aligned_sample = os.path.join("aligned", sample.name, sample.name + "_aligned_pe.sam.gz")
 			aligned_sample = self.select_input_files([[readset.bam for readset in sample.readsets], [os.path.join("aligned",sample.name, sample.name + "_aligned_pe.sam.gz")]])
 			run_type = sample.readsets[0].run_type	
 			job = Job(
@@ -343,8 +342,6 @@ class Episeq(common.Illumina):
 								 B={permutations},
 								 verbose=TRUE,
 								 maxGap=500)
-
-		dmrs <- na.omit(dmrs)
 
 		write.csv(dmrs\$table, "{dmrs_file}", quote=FALSE, row.names=FALSE)
 

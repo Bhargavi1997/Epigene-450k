@@ -96,18 +96,40 @@ class Config(ConfigParser.SafeConfigParser):
                         return value
                     else:
                         raise Exception("File path \"" + value + "\" does not exist or is not a valid regular file!")
+                elif type == 'filepathlist':
+                    value = [ os.path.expandvars(f).strip() for f in self.get(section, option).split(":") if f ]
+                    for f in value:
+                        if not os.path.isfile(f):
+                            raise Exception("File path \"" + f + "\" does not exist or is not a valid regular file!")
+                            break
+                    else:
+                        return value
                 elif type == 'dirpath':
                     value = os.path.expandvars(self.get(section, option))
                     if os.path.isdir(value):
                         return value
                     else:
                         raise Exception("Directory path \"" + value + "\" does not exist or is not a valid directory!")
+                elif type == 'dirpathlist':
+                    value = [ os.path.expandvars(f).strip() for f in self.get(section, option).split(":") if f ]
+                    for f in value:
+                        if not os.path.isdir(f):
+                            raise Exception("Directory path \"" + f + "\" does not exist or is not a valid directory!")
+                    else:
+                        return value
                 elif type == 'prefixpath':
                     value = os.path.expandvars(self.get(section, option))
                     if glob.glob(value + "*"):
                         return value
                     else:
                         raise Exception("Prefix path \"" + value + "\" does not match any file!")
+                elif type == 'prefixpathlist':
+                    value = [ os.path.expandvars(f).strip() for f in self.get(section, option).split(":") if f ]
+                    for f in value:
+                        if not glob.glob(value + "*"):
+                            raise Exception("Prefix path \"" + value + "\" does not match any file!")
+                    else:
+                        return value
                 elif type == 'list':
                     # Remove empty strings from list
                     return [x for x in self.get(section, option).split(",") if x]

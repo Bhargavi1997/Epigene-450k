@@ -311,9 +311,15 @@ cp -r \\
   {self.report_template_dir}/css/ \\
   {self.report_template_dir}/images/ \\
   {self.report_template_dir}/_js/ \\
-  {self.report_template_dir}/config_and_references.md \\
+  {self.report_template_dir}/Epigene.quality_control.md \\
+  {self.report_template_dir}/Epigene.config_and_parameters.md \\
+  {self.report_template_dir}/Epigene.references.md \\
   report/
+cp report/data/quality_control/*.png report/images/
+cp report/*.pdf report/images/
 cp {config_file} report/config.ini
+#rm report/data/*.txt
+rm report/*.txt
 pandoc \\
   --toc \\
   --toc-depth=6 \\
@@ -321,21 +327,15 @@ pandoc \\
   --css=css/style.css \\
   --variable title="{title}" \\
   --filter pandoc-citeproc \\
-  <(pandoc --to=markdown \\
-    --template {introduction} \\
-    --variable date="{date}" \\
-    {introduction} \\
-  ) \\
   {report_files} \\
-  report/config_and_references.md \\
+  report/Epigene.config_and_parameters.md \\
+  report/Epigene.references.md \\
   --output report/index.html""".format(
                 module_pandoc=config.param('report', 'module_pandoc'),
                 output_dir=output_dir,
                 config_file=config.filepath,
                 self=self,
                 title=config.param('report', 'title'),
-                introduction=os.path.join(self.report_template_dir, self.__class__.__name__ + '.introduction.md'),
-                date=datetime.datetime.now().strftime("%Y-%m-%d"),
                 report_files=" \\\n  ".join(report_files)
             ))
 
@@ -357,3 +357,4 @@ def parse_range(astr):
         x = part.split('-')
         result.update(range(int(x[0]), int(x[-1]) + 1))
     return sorted(result)
+

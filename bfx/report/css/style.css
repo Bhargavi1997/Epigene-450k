@@ -141,6 +141,9 @@ img{
 	padding:0px;
 	margin:0px;
 }
+.figure img{
+	width: 100%;
+}
 #mainMenu{
 	background-image:url(images/mainMenuBackground.gif);
 	background-repeat:repeat-x;
