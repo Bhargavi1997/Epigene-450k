@@ -164,11 +164,11 @@ dmrs <- dmrs[which(dmrs\$p.value <= {pvalue}),]
 dmrs <- dmrs[which(dmrs\$L >= {LCutoff}),]
 ann <- getAnnotation(grset)
 pos <- mapply(function(x,y) {{c(x:y)}}, dmrs\$start, dmrs\$end)
-dmrs\$genes <- mapply(function(x) {{ann[which(ann\$pos %in% data.frame(x)[,1]),]\$UCSC_RefGene_Name}}, pos)
-dmrs\$genes <- sapply(dmrs\$genes, function(x){{paste(x, collapse=';')}})
-dmrs\$genes = strsplit(as.character(dmrs\$genes), ";")
-dmrs\$genes = as.character(lapply(dmrs\$genes, function(x) {{paste(unique(as.character(x)), collapse=";")}}))
-#dmrs\$genes = as.character(dmrs\$genes)
+dmrs\$genes <- mapply(function(x,y) {{ann[which(ann\$pos %in% data.frame(x)[,1] & ann\$chr == y),]\$UCSC_RefGene_Name}}, pos,dmrs\$chr)
+dmrs\$genes <- sapply(dmrs\$genes, unlist)
+dmrs\$genes <- sapply(dmrs\$genes, function(x){{paste(x[x!=""],sep=";",collapse=";")}})
+dmrs\$genes <- sapply(dmrs\$genes, function(x){{strsplit(x, split=";")}})
+dmrs\$genes <- as.character(sapply(dmrs\$genes, function(x){{paste(unique(x),collapse=";")}}))
 write.csv(dmrs , "{output_file}")
 EOF""".format(
 		group=tuple(sample_group),

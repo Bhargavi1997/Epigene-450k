@@ -2,7 +2,7 @@
 
 Differentially methylated positions (DMPs) are identified using the Minfi package.
 
-The p-value cut-off chosen is $pvalue$ and methylation difference threshold is $delta_beta_threshold$.  Differentially methylation is considered to be significant if p-value is lower than than p-value cut-off.
+The p-value cut-off chosen is $pvalue$ and methylation difference threshold is $delta_beta_threshold$.  Differentially methylation is considered to be significant if p-value is lower than p-value cut-off.
 
 The p-values can be adjusted for multiple testing using different methods in order to reduce false positives from the result.  P-value adjustment method chosen in this run was $padjust_method$.
 

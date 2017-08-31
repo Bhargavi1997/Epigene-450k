@@ -22,7 +22,7 @@ def pca_plot(input_rds_file,input_file, output_file, contrast, jobname):
 	if(extension == 'rds'){{
 		input <- readRDS("{input_rds_file}")
 	}}else{{
-		input <- read.csv("{input_file}")
+		input <- read.csv("{input_file}", as.is=TRUE)
 	}}
 	gset <- readRDS("{input_rds_file}")
 	P <- DataFrame(group=factor(c{group}), row.names=c{sample_names})
