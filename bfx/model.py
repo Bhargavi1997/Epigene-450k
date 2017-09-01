@@ -12,7 +12,7 @@ def build_model(rgset_file, dmps_file, contrast, method, source='minfi'):
 			[dmps_file,rgset_file],
 			[contrast.name+'_'+source+'_model.RData'],                
                         command="""\                    
-            mkdir -p report/data/models \
+            mkdir -p report/data/models
 	    R --vanilla <<-'EOF'
         suppressPackageStartupMessages(library(minfi))
             suppressPackageStartupMessages(library(caret))
